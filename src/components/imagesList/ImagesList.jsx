@@ -1,4 +1,7 @@
-import {ImageList, ImageListItem} from '@mui/material';
+import {Avatar, ImageList, ImageListItem, Tooltip, Typography} from '@mui/material';
+import moment from 'moment/moment';
+import profileImg from '../../img/profile.jpg'
+import { Options } from './Options';
 
 
 function srcset(image, size, rows = 1, cols = 1) {
@@ -21,12 +24,45 @@ export const ImagesList = () => {
         <ImageListItem 
           key={item.img} 
           cols={pattern[index - Math.floor(index/pattern.length) * pattern.length].cols} 
-          rows={pattern[index - Math.floor(index/pattern.length) * pattern.length].rows}>
+          rows={pattern[index - Math.floor(index/pattern.length) * pattern.length].rows}
+          sx={{
+            opacity: '.7',
+            transition: 'opacity .3s linear',
+            cursor: 'pointer',
+            '&:hover': {opacity: 1}
+          }}
+          >
+            <Options/>
           <img
             {...srcset(item.img, 200, pattern[index - Math.floor(index/pattern.length) * pattern.length].rows, pattern[index - Math.floor(index/pattern.length) * pattern.length].cols)}
             alt={item.title}
             loading="lazy"
           />
+          <Typography
+            variant='body2'
+            component='span'
+            sx={{
+              position: 'absolute',
+              bottom: 0, 
+              left: 0,
+              color: 'white',
+              background: 'rgba(0,0,0,.3)',
+              p: '5px',
+              borderTopRightRadius: 8
+            }}
+          >
+            {moment(new Date() - 500 * 60 * 60).fromNow()}
+          </Typography>
+          <Tooltip
+            title='User Name'
+            sx={{
+              position: 'absolute',
+              bottom: '3px',
+              right: '3px'
+            }}
+          >
+            <Avatar src={profileImg}/>
+          </Tooltip>
         </ImageListItem>
       ))}
     </ImageList>

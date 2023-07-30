@@ -1,9 +1,8 @@
 import {useState} from 'react';
-import {Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip, Button } from '@mui/material';
-import { Settings, Logout, Lock} from '@mui/icons-material';
-import profileImg from '../img/profile.jpg'
+import {Box, Menu, MenuItem, ListItemIcon, IconButton, Tooltip } from '@mui/material';
+import { MoreVert, Delete} from '@mui/icons-material';
 
-export const Nav = () => {
+export const Options = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (e) => {
@@ -13,30 +12,23 @@ export const Nav = () => {
     setAnchorEl(null);
   };
   
-  const [currentUser, setCurrentUser] = useState({
-    email: 'test@test.com',
-    displayName: 'John',
-    photoURL: profileImg,
-  })
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {!currentUser ? <Button startIcon={<Lock/>}>Login</Button> : (
-            <Tooltip title="Account settings">
+        <Tooltip title='Options'>
             <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+                sx={{
+                    position:'absolute',
+                    right: 0,
+                    top: 0,
+                    color: 'white',
+                    background: 'rgba(0,0,0,.3)'
+                }}
             >
-              <Avatar sx={{ width: 32, height: 32 }} src={currentUser?.photoURL}>
-                {currentUser?.displayName?.charAt(0)?.toUpperCase() || currentUser?.email?.charAt(0)?.toUpperCase()}
-              </Avatar>
+                <MoreVert fontSize='large'/>
             </IconButton>
-          </Tooltip>
-        )}
+        </Tooltip>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -74,20 +66,10 @@ export const Nav = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <Delete/>
           </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
+          Delete
         </MenuItem>
       </Menu>
     </>
