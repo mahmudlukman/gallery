@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 import React from 'react'
 
-const CircularProgress = ({value}) => {
+const CircularProgressWithLabel = ({value}) => {
   return (
     <Box>
       <CircularProgress size={60} thickness={5} variant='determinate' value={value}/>
@@ -30,4 +30,4 @@ const CircularProgress = ({value}) => {
   )
 }
 
-export default CircularProgress
+export default CircularProgressWithLabel
