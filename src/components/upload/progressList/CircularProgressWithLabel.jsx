@@ -23,7 +23,7 @@ const CircularProgressWithLabel = ({value}) => {
           color='white'
           fontSize='1rem'
         >
-          {value}
+          {Math.round(value) + '%'}
         </Typography>
       </Box>
     </Box>
