@@ -1,16 +1,28 @@
 import {useState} from 'react';
 import {Box, Menu, MenuItem, ListItemIcon, IconButton, Tooltip } from '@mui/material';
 import { MoreVert, Delete} from '@mui/icons-material';
+import deleteDocument from '../../firebase/deleteDocument';
+import deleteFile from '../../firebase/DeleteFile';
 
-export const Options = () => {
+export const Options = ({imageId}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const currentUser = {uid: 'userId'}
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleDelete = async() => {
+    try {
+      await deleteDocument('gallery', imageId)
+      await deleteFile(`gallery/${currentUser.uid}/${imageId}`)
+    } catch (error) {
+      console.log(error)
+    }
+  } 
   
   return (
     <>
@@ -65,7 +77,7 @@ export const Options = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <Delete/>
           </ListItemIcon>
