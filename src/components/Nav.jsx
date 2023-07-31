@@ -2,6 +2,8 @@ import {useState} from 'react';
 import {Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip, Button } from '@mui/material';
 import { Settings, Logout, Lock} from '@mui/icons-material';
 import profileImg from '../img/profile.jpg'
+import { useAuth } from '../context/AuthContext';
+import Login from './user/Login';
 
 export const Nav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -13,15 +15,25 @@ export const Nav = () => {
     setAnchorEl(null);
   };
   
-  const [currentUser, setCurrentUser] = useState({
-    email: 'test@test.com',
-    displayName: 'John',
-    photoURL: profileImg,
-  })
+  const {currentUser, setModal, logout} = useAuth()
+
+  const openLogin = () => {
+    setModal({isOpen: true, title: 'Login', content: <Login/>})
+  }
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch (error) {
+      alert(error.message)
+      console.log(error)
+    }
+  }
+   
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {!currentUser ? <Button startIcon={<Lock/>}>Login</Button> : (
+        {!currentUser ? <Button startIcon={<Lock/>} onClick={openLogin}>Login</Button> : (
             <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
@@ -83,7 +95,7 @@ export const Nav = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

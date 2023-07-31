@@ -1,0 +1,77 @@
+import { Button, DialogActions, DialogContent, DialogContentText } from '@mui/material'
+import React, { useEffect, useRef, useState } from 'react'
+import EmailField from './inputs/EmailField'
+import PasswordField from './inputs/PasswordField'
+import SubmitButton from './inputs/SubmitButton'
+import { useAuth } from '../../context/AuthContext'
+
+const Login = () => {
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const confirmPasswordRef = useRef()
+
+  const [isRegister, setIsRegister] = useState(false)
+  const {modal, setModal, signUp, login} = useAuth()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const email = emailRef.current.value
+    const password = passwordRef.current.value
+    if(isRegister){
+      const confirmPassword = confirmPasswordRef.current.value
+      try {
+        if(password !== confirmPassword){
+          throw new Error("Passwords don't match")
+        }
+        await signUp(email, password)
+        setModal({...modal, isOpen: false})
+      } catch (error) {
+        alert(error.message)
+        console.log(error)
+      }
+    }else{
+      try {
+        await login(email, password)
+        setModal({...modal, isOpen: false})
+      } catch (error) {
+        alert(error.message)
+        console.log(error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if(isRegister){
+      setModal({...modal, title: 'Register'})
+    }else{
+      setModal({...modal, title: 'Login'})
+    }
+  },[isRegister])
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <DialogContent dividers>
+          <DialogContentText>
+            Pleas enter your email and your password here:
+          </DialogContentText>
+          <EmailField {...{emailRef}}/>
+          <PasswordField {...{passwordRef}}/>
+          {isRegister && <PasswordField {...{passwordRef: confirmPasswordRef, id:'confirmPassword', label:'Confirm Password'}}/>}
+        </DialogContent>
+        <DialogActions sx={{justifyContent: 'space-between', px: '19px'}}>
+            <Button size='small'>Forgot Password</Button>
+            <SubmitButton/>
+        </DialogActions>
+      </form>
+      <DialogActions sx={{justifyContent: 'left', p: '5px 24px'}}>
+        {isRegister ? "Do you have an account? Sign in now" : "Don't have an account? Create one now"}
+        <Button onClick={() => setIsRegister(!isRegister)}>
+          {isRegister ? 'Login' : 'Register'}
+        </Button>
+      </DialogActions>
+    </>
+  )
+}
+
+export default Login
