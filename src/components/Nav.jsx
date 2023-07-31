@@ -86,7 +86,7 @@ export const Nav = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
+          <Avatar src={currentUser?.photoURL}/> Profile
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

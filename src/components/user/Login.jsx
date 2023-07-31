@@ -4,6 +4,7 @@ import EmailField from './inputs/EmailField'
 import PasswordField from './inputs/PasswordField'
 import SubmitButton from './inputs/SubmitButton'
 import { useAuth } from '../../context/AuthContext'
+import { Google } from '@mui/icons-material'
 
 const Login = () => {
   const emailRef = useRef()
@@ -11,7 +12,7 @@ const Login = () => {
   const confirmPasswordRef = useRef()
 
   const [isRegister, setIsRegister] = useState(false)
-  const {modal, setModal, signUp, login} = useAuth()
+  const {modal, setModal, signUp, login, loginWithGoogle} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,6 +38,16 @@ const Login = () => {
         alert(error.message)
         console.log(error)
       }
+    }
+  }
+
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle()
+      setModal({...modal, isOpen: false})
+    } catch (error) {
+      alert(error.message)
+        console.log(error)
     }
   }
 
@@ -68,6 +79,15 @@ const Login = () => {
         {isRegister ? "Do you have an account? Sign in now" : "Don't have an account? Create one now"}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
+        </Button>
+      </DialogActions>
+      <DialogActions sx={{justifyContent: 'center', py: '24px'}}>
+        <Button
+          variant='outlined'
+          startIcon={<Google/>}
+          onClick={handleGoogleLogin}
+        >
+          Login with Google
         </Button>
       </DialogActions>
     </>
