@@ -3,11 +3,12 @@ import {Box, Menu, MenuItem, ListItemIcon, IconButton, Tooltip } from '@mui/mate
 import { MoreVert, Delete} from '@mui/icons-material';
 import deleteDocument from '../../firebase/deleteDocument';
 import deleteFile from '../../firebase/DeleteFile';
+import { useAuth } from '../../context/AuthContext';
 
 export const Options = ({imageId}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const currentUser = {uid: 'userId'}
+  const {currentUser, setAlert} = useAuth()
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -20,6 +21,7 @@ export const Options = ({imageId}) => {
       await deleteDocument('gallery', imageId)
       await deleteFile(`gallery/${currentUser.uid}/${imageId}`)
     } catch (error) {
+      setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 8000, location: 'main'})
       console.log(error)
     }
   } 

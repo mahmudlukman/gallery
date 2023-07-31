@@ -48,6 +48,7 @@ const AuthContext = ({children}) => {
     setModal,
     loginWithGoogle,
     alert,
+    setAlert,
     loading,
     setLoading,
   }

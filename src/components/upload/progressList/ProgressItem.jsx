@@ -5,11 +5,12 @@ import { CheckCircleOutline } from '@mui/icons-material'
 import {v4 as uuidv4} from 'uuid'
 import uploadFileWithProgress from '../../../firebase/uploadFileWithProgress'
 import addDocument from '../../../firebase/addDocument'
+import { useAuth } from '../../../context/AuthContext'
 
 const ProgressItem = ({file}) => {
     const [progress, setProgress] = useState(100)
     const [imageURL, setImageURL] = useState(null)
-    const currentUser = {uid: 'userId'}
+    const {currentUser, setAlert} = useAuth()
 
     useEffect(() => {
         const uploadImage = async()=>{
@@ -23,15 +24,15 @@ const ProgressItem = ({file}) => {
                 )
                 const galleryDoc = {
                     imageURL: url,
-                    uid: currentUser.uid,
-                    uEmail: 'test@test.com',
-                    uName: 'John',
-                    uPhoto: ''
+                    uid: currentUser.uid || '',
+                    uEmail: currentUser?.email || '',
+                    uName: currentUser?.displayName || '',
+                    uPhoto: currentUser?.photoURL || ''
                 }
                 await addDocument('gallery', galleryDoc, imageName)
                 setImageURL(null)
             } catch (error) {
-                alert(error.message)
+                setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 8000, location: 'main'})
                 console.log(error)
             }
         }

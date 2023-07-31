@@ -15,7 +15,7 @@ export const Nav = () => {
     setAnchorEl(null);
   };
   
-  const {currentUser, setModal, logout} = useAuth()
+  const {currentUser, setModal, logout, setAlert} = useAuth()
 
   const openLogin = () => {
     setModal({isOpen: true, title: 'Login', content: <Login/>})
@@ -25,7 +25,7 @@ export const Nav = () => {
     try {
       await logout()
     } catch (error) {
-      alert(error.message)
+      setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 8000, location: 'main'})
       console.log(error)
     }
   }

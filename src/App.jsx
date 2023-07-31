@@ -4,6 +4,7 @@ import {ImagesList} from "./components/imagesList/ImagesList"
 import Upload from "./components/upload/Upload"
 import AuthContext from "./context/AuthContext"
 import Modal from "./components/Modal"
+import MainNotification from "./components/MainNotification"
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     <Container maxWidth='lg' sx={{textAlign: 'center', mt: '3rem'}}>
       <AuthContext>
         <Modal/>
+        <MainNotification/>
         <Nav/>
         <Upload/>
         <ImagesList/>

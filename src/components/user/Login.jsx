@@ -12,7 +12,7 @@ const Login = () => {
   const confirmPasswordRef = useRef()
 
   const [isRegister, setIsRegister] = useState(false)
-  const {modal, setModal, signUp, login, loginWithGoogle} = useAuth()
+  const {modal, setModal, signUp, login, loginWithGoogle, setAlert} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -27,7 +27,7 @@ const Login = () => {
         await signUp(email, password)
         setModal({...modal, isOpen: false})
       } catch (error) {
-        alert(error.message)
+        setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 5000, location: 'modal'})
         console.log(error)
       }
     }else{
@@ -35,7 +35,7 @@ const Login = () => {
         await login(email, password)
         setModal({...modal, isOpen: false})
       } catch (error) {
-        alert(error.message)
+        setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 8000, location: 'modal'})
         console.log(error)
       }
     }
@@ -46,7 +46,7 @@ const Login = () => {
       await loginWithGoogle()
       setModal({...modal, isOpen: false})
     } catch (error) {
-      alert(error.message)
+      setAlert({isAlert: true, severity: 'error', message: error.message, timeout: 8000, location: 'modal'})
         console.log(error)
     }
   }

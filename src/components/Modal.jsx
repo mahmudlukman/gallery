@@ -1,13 +1,23 @@
 import { Dialog, DialogTitle, IconButton } from '@mui/material'
 import { useAuth } from '../context/AuthContext'
 import { Close } from '@mui/icons-material'
+import Notify from './Notify'
+import { useEffect } from 'react'
   
 const Modal = () => {
-  const {modal, setModal} = useAuth()
+  const {modal, setModal, alert:{location, isAlert}, setAlert} = useAuth()
 
   const handleClose = () => {
-    setModal({})
+    setModal({...modal, isOpen: false})
   }
+
+  useEffect(() => {
+    if(modal.isOpen === false){
+      if(isAlert && location === 'modal') {
+        setAlert({...alert, isAlert: false})
+      }
+    }
+  },[modal?.isOpen])
 
   return (
     <Dialog open={modal.isOpen} onClose={handleClose}>
@@ -26,6 +36,7 @@ const Modal = () => {
           <Close/>
         </IconButton>
       </DialogTitle>
+      {location === 'modal' && <Notify/>}
       {modal.content}
     </Dialog>
   )
