@@ -12,10 +12,11 @@ const Login = () => {
   const confirmPasswordRef = useRef()
 
   const [isRegister, setIsRegister] = useState(false)
-  const {modal, setModal, signUp, login, loginWithGoogle, setAlert} = useAuth()
+  const {modal, setModal, signUp, login, loginWithGoogle, setAlert, setLoading} = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const email = emailRef.current.value
     const password = passwordRef.current.value
     if(isRegister){
@@ -39,6 +40,7 @@ const Login = () => {
         console.log(error)
       }
     }
+    setLoading(false)
   }
 
   const handleGoogleLogin = async () => {

@@ -37,7 +37,7 @@ export const ImagesList = () => {
             <Options imageId={item?.id}/>
           <img
             {...srcset(item?.data?.imageURL, 200, pattern[index - Math.floor(index/pattern.length) * pattern.length].rows, pattern[index - Math.floor(index/pattern.length) * pattern.length].cols)}
-            alt={item?.data?.uName || item?.data?.uEmail}
+            alt={item?.data?.uName || item?.data?.uEmail?.split('@')[0]}
             loading="lazy"
           />
           <Typography
@@ -56,7 +56,7 @@ export const ImagesList = () => {
             {moment(item?.data?.timestamp?.toDate()).fromNow()}
           </Typography>
           <Tooltip
-            title={item?.data?.uName || item?.data?.uEmail}
+            title={item?.data?.uName || item?.data?.uEmail?.split('@')[0]}
             sx={{
               position: 'absolute',
               bottom: '3px',
