@@ -4,6 +4,7 @@ import { Settings, Logout, Lock} from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import Login from './user/Login';
 import Profile from './user/Profile';
+import AccountSettings from './user/settings/AccountSettings';
 
 export const Nav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -89,7 +90,7 @@ export const Nav = () => {
           <Avatar src={currentUser?.photoURL}/> Profile
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => setModal({isOpen: true, title: 'Account Settings', content: <AccountSettings/>})}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
