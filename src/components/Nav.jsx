@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip, Button } from '@mui/material';
 import { Settings, Logout, Lock} from '@mui/icons-material';
-import profileImg from '../img/profile.jpg'
 import { useAuth } from '../context/AuthContext';
 import Login from './user/Login';
+import Profile from './user/Profile';
 
 export const Nav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -85,7 +85,7 @@ export const Nav = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => setModal({isOpen: true, title: 'Update Profile', content: <Profile/>})}>
           <Avatar src={currentUser?.photoURL}/> Profile
         </MenuItem>
         <Divider />
