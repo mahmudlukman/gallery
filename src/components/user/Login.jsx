@@ -5,6 +5,7 @@ import PasswordField from './inputs/PasswordField'
 import SubmitButton from './inputs/SubmitButton'
 import { useAuth } from '../../context/AuthContext'
 import { Google } from '@mui/icons-material'
+import ResetPassword from './ResetPassword'
 
 const Login = () => {
   const emailRef = useRef()
@@ -73,7 +74,7 @@ const Login = () => {
           {isRegister && <PasswordField {...{passwordRef: confirmPasswordRef, autoFocus: false, id:'confirmPassword', label:'Confirm Password'}}/>}
         </DialogContent>
         <DialogActions sx={{justifyContent: 'space-between', px: '19px'}}>
-            <Button size='small'>Forgot Password</Button>
+            <Button size='small' onClick={() => setModal({...modal, title: 'Reset Password', content: <ResetPassword/>})}>Forgot Password</Button>
             <SubmitButton/>
         </DialogActions>
       </form>
