@@ -47,6 +47,7 @@ const ChangePassword = () => {
         <PasswordField
           {...{
             passwordRef: confirmPasswordRef,
+            autoFocus: false,
             id: 'confirmPassword',
             label: 'Confirm Password',
           }}

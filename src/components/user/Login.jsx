@@ -69,8 +69,8 @@ const Login = () => {
             Pleas enter your email and your password here:
           </DialogContentText>
           <EmailField {...{emailRef}}/>
-          <PasswordField {...{passwordRef}}/>
-          {isRegister && <PasswordField {...{passwordRef: confirmPasswordRef, id:'confirmPassword', label:'Confirm Password'}}/>}
+          <PasswordField {...{passwordRef, autoFocus: false}}/>
+          {isRegister && <PasswordField {...{passwordRef: confirmPasswordRef, autoFocus: false, id:'confirmPassword', label:'Confirm Password'}}/>}
         </DialogContent>
         <DialogActions sx={{justifyContent: 'space-between', px: '19px'}}>
             <Button size='small'>Forgot Password</Button>
