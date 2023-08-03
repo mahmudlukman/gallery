@@ -3,7 +3,6 @@ import moment from 'moment/moment';
 import profileImg from '../../img/profile.jpg'
 import { Options } from './Options';
 import useFirestore from '../../firebase/useFirestore'
-import { useAuth } from '../../context/AuthContext';
 
 
 function srcset(image, size, rows = 1, cols = 1) {
@@ -16,7 +15,6 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 export const ImagesList = () => {
-  const {currentUser} = useAuth()
   const {documents} = useFirestore('gallery')
   return (
     <ImageList
@@ -36,9 +34,7 @@ export const ImagesList = () => {
             '&:hover': {opacity: 1}
           }}
           >
-            {currentUser?.uid === item?.data?.uid && (
-              <Options imageId={item?.id}/>
-            )}
+            <Options imageId={item?.id} uid={item?.data?.uid} imageURL={item?.data?.imageURL}/>
           <img
             {...srcset(item?.data?.imageURL, 200, pattern[index - Math.floor(index/pattern.length) * pattern.length].rows, pattern[index - Math.floor(index/pattern.length) * pattern.length].cols)}
             alt={item?.data?.uName || item?.data?.uEmail?.split('@')[0]}
